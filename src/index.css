@@ -170,6 +170,7 @@ section { padding: 6rem 0; }
 .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 4rem; align-items: center; }
 .hero-name {
   font-size: 4rem; font-weight: 700; line-height: 1.05; margin-bottom: 0.5rem; letter-spacing: -0.03em;
+  color: #ffffff;
 }
 .hero-name span { color: var(--accent-blue); }
 .hero-role {
