@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
+import Icon from './Icon';
 
 export default function Preloader({ isStarted, onStart }) {
   const [show, setShow] = useState(true);
@@ -102,7 +103,42 @@ export default function Preloader({ isStarted, onStart }) {
         ref={emailRef}
         style={{ position: 'absolute', top: '2.5rem', right: '3rem', zIndex: 10 }}
       >
-        <a href="mailto:akashpandit8436@gmail.com" style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', letterSpacing: '0.05em', transition: 'color 0.3s' }} onMouseOver={(e) => e.target.style.color = '#fff'} onMouseOut={(e) => e.target.style.color = 'var(--text-secondary)'}>Email me</a>
+        <a 
+          href="mailto:akashpandit8436@gmail.com" 
+          style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '0.5rem',
+            padding: '0.6rem 1.25rem',
+            background: 'rgba(255,255,255,0.05)',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(255,255,255,0.2)',
+            borderRadius: '100px',
+            color: 'rgba(255,255,255,0.9)', 
+            fontSize: '0.85rem',
+            fontWeight: 500,
+            letterSpacing: '0.05em', 
+            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+            textDecoration: 'none'
+          }} 
+          onMouseOver={(e) => {
+            e.currentTarget.style.background = 'rgba(255,255,255,0.15)';
+            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)';
+            e.currentTarget.style.color = '#ffffff';
+            e.currentTarget.style.transform = 'translateY(-2px)';
+            e.currentTarget.style.boxShadow = '0 10px 25px rgba(255,255,255,0.1)';
+          }} 
+          onMouseOut={(e) => {
+            e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
+            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)';
+            e.currentTarget.style.color = 'rgba(255,255,255,0.9)';
+            e.currentTarget.style.transform = 'translateY(0)';
+            e.currentTarget.style.boxShadow = 'none';
+          }}
+        >
+          <Icon name="mail" size={16} />
+          Email me
+        </a>
       </div>
 
       {/* Left Side Content */}
