@@ -44,15 +44,17 @@ export default function Preloader({ isStarted, onStart }) {
   }, { scope: containerRef });
 
   const handleStart = () => {
-    // Exit animation
+    // Fire onStart immediately so content begins rendering behind the preloader
+    onStart();
+    // Exit animation plays on top while content loads underneath
     gsap.to(containerRef.current, {
       opacity: 0,
-      scale: 1.05,
-      filter: 'blur(10px)',
-      duration: 1.2,
-      ease: 'power3.inOut',
+      scale: 1.02,
+      filter: 'blur(6px)',
+      duration: 0.5,
+      ease: 'power2.out',
       onComplete: () => {
-        onStart();
+        setShow(false);
       }
     });
   };
@@ -101,26 +103,11 @@ export default function Preloader({ isStarted, onStart }) {
       {/* Top Right Email */}
       <div 
         ref={emailRef}
-        style={{ position: 'absolute', top: '2.5rem', right: '3rem', zIndex: 10 }}
+        className="preloader-email"
       >
         <a 
           href="mailto:akashpandit8436@gmail.com" 
-          style={{ 
-            display: 'flex', 
-            alignItems: 'center', 
-            gap: '0.5rem',
-            padding: '0.6rem 1.25rem',
-            background: 'rgba(255,255,255,0.05)',
-            backdropFilter: 'blur(10px)',
-            border: '1px solid rgba(255,255,255,0.2)',
-            borderRadius: '100px',
-            color: 'rgba(255,255,255,0.9)', 
-            fontSize: '0.85rem',
-            fontWeight: 500,
-            letterSpacing: '0.05em', 
-            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-            textDecoration: 'none'
-          }} 
+          className="preloader-email-btn"
           onMouseOver={(e) => {
             e.currentTarget.style.background = 'rgba(255,255,255,0.15)';
             e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)';
@@ -144,50 +131,39 @@ export default function Preloader({ isStarted, onStart }) {
       {/* Left Side Content */}
       <div 
         ref={leftContentRef}
-        style={{ position: 'absolute', top: '48%', left: '5rem', transform: 'translateY(-50%)', zIndex: 10 }}
+        className="preloader-left"
       >
-        <p style={{ color: 'var(--accent-blue)', fontSize: '0.75rem', letterSpacing: '0.2em', marginBottom: '1rem', fontWeight: 600, opacity: 0.5 }}>PORTFOLIO 2026</p>
-        <h1 style={{ fontSize: '7.5vw', fontWeight: 800, lineHeight: 0.95, letterSpacing: '-0.03em', color: 'rgba(255,255,255,0.95)' }}>Akash<br/>Pandit</h1>
+        <p className="preloader-left-subtitle">PORTFOLIO 2026</p>
+        <h1 className="preloader-left-title">Akash<br/>Pandit</h1>
       </div>
 
       {/* Bottom Left Content */}
       <div 
         ref={bottomLeftRef}
-        style={{ position: 'absolute', bottom: '3rem', left: '5rem', zIndex: 10 }}
+        className="preloader-bottom-left"
       >
-        <p style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', letterSpacing: '0.15em', textTransform: 'uppercase', opacity: 0.5 }}>
+        <p className="preloader-bottom-text">
           Full-Stack Developer | Product Builder | Frontend Developer
         </p>
       </div>
 
       {/* Center Content */}
-      <div style={{ position: 'relative', zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <div className="preloader-center">
         <p 
           ref={centerNameRef}
-          style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-secondary)', marginBottom: '2rem', opacity: 0.8 }}
+          className="preloader-center-name"
         >
           Akash Pandit
         </p>
         
         <button
           ref={btnRef}
+          className="preloader-btn"
           onClick={handleStart}
           onMouseEnter={(e) => gsap.to(e.currentTarget, { scale: 1.05, backgroundColor: 'rgba(245, 158, 11, 0.1)', boxShadow: '0 0 20px rgba(245,158,11,0.2)', duration: 0.3 })}
           onMouseLeave={(e) => gsap.to(e.currentTarget, { scale: 1, backgroundColor: 'transparent', boxShadow: 'none', duration: 0.3 })}
           onMouseDown={(e) => gsap.to(e.currentTarget, { scale: 0.95, duration: 0.1 })}
           onMouseUp={(e) => gsap.to(e.currentTarget, { scale: 1.05, duration: 0.1 })}
-          style={{
-            background: 'transparent',
-            border: '1px solid var(--accent-blue)',
-            color: 'var(--accent-blue)',
-            padding: '0.8rem 3rem',
-            borderRadius: '100px',
-            fontSize: '0.85rem',
-            fontWeight: 600,
-            letterSpacing: '0.15em',
-            cursor: 'pointer',
-            transition: 'border-color 0.3s ease, color 0.3s ease', // keep basic css transition, gsap handles transform/bg
-          }}
         >
           START
         </button>

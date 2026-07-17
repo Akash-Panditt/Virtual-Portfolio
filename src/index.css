@@ -448,6 +448,58 @@ section { padding: 6rem 0; }
 .footer-links a:hover { color: var(--accent-blue); }
 .footer-links span { color: var(--text-muted); font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; }
 
+/* ====== Preloader ====== */
+.preloader-email {
+  position: absolute; top: 2.5rem; right: 3rem; z-index: 10;
+}
+.preloader-email-btn {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.6rem 1.25rem;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 100px;
+  color: rgba(255,255,255,0.9); 
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.05em; 
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+}
+.preloader-left {
+  position: absolute; top: 48%; left: 5rem; transform: translateY(-50%); z-index: 10;
+}
+.preloader-left-subtitle {
+  color: var(--accent-blue); font-size: 0.75rem; letter-spacing: 0.2em; margin-bottom: 1rem; font-weight: 600; opacity: 0.5;
+}
+.preloader-left-title {
+  font-size: 7.5vw; font-weight: 800; line-height: 0.95; letter-spacing: -0.03em; color: rgba(255,255,255,0.95);
+}
+.preloader-bottom-left {
+  position: absolute; bottom: 3rem; left: 5rem; z-index: 10;
+}
+.preloader-bottom-text {
+  color: var(--text-secondary); font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.5;
+}
+.preloader-center {
+  position: relative; z-index: 10; display: flex; flex-direction: column; align-items: center;
+}
+.preloader-center-name {
+  font-size: 0.75rem; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 2rem; opacity: 0.8;
+}
+.preloader-btn {
+  background: transparent;
+  border: 1px solid var(--accent-blue);
+  color: var(--accent-blue);
+  padding: 0.8rem 3rem;
+  border-radius: 100px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+
 /* ====== Responsive ====== */
 @media (max-width: 1024px) {
   .hero-grid, .journey-grid, .project-feature, .contact-grid, .startup-layout { grid-template-columns: 1fr; }
@@ -469,6 +521,18 @@ section { padding: 6rem 0; }
     margin-top: 0.5rem; box-shadow: 0 12px 48px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.05); 
   }
   .nav-links.open { display: flex; animation: menuFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; transform-origin: top right; }
+  
+  /* Preloader Mobile Adjustments */
+  .preloader-left {
+    position: relative; top: auto; left: auto; transform: none; text-align: center; margin-bottom: 2rem;
+  }
+  .preloader-left-title { font-size: 15vw; }
+  .preloader-bottom-left {
+    position: relative; bottom: auto; left: auto; margin-top: 2rem; text-align: center; padding: 0 1rem;
+  }
+  .preloader-email {
+    top: 1.5rem; right: 1.5rem;
+  }
   
   /* Force dark text in light mode mobile menu, overriding the desktop transparent header rule */
   [data-theme="light"] .navbar:not(.scrolled) .nav-links a,

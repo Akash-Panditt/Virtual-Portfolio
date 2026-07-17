@@ -15,13 +15,7 @@ export default function Hero({ isStarted }) {
 
   useEffect(() => {
     if (isStarted && videoRef.current) {
-      // Delay video playback to sync with the entrance animation (delay: 1.4s)
-      const playTimer = setTimeout(() => {
-        if (videoRef.current) {
-          videoRef.current.play().catch(e => console.error("Autoplay prevented:", e));
-        }
-      }, 1400);
-      return () => clearTimeout(playTimer);
+      videoRef.current.play().catch(e => console.error("Autoplay prevented:", e));
     }
   }, [isStarted]);
 
@@ -45,7 +39,6 @@ export default function Hero({ isStarted }) {
   useGSAP(() => {
     if (!isStarted) {
       gsap.set(videoWrapperRef.current, { opacity: 0, filter: 'blur(10px)' });
-      gsap.set(contentWrapperRef.current, { opacity: 0 });
       gsap.set(floatingBadgeRef.current, { opacity: 0, y: 20 });
       gsap.set('.hero-stagger-item', { opacity: 0, y: 30 });
       return;
@@ -54,24 +47,16 @@ export default function Hero({ isStarted }) {
     gsap.to(videoWrapperRef.current, {
       opacity: 1,
       filter: 'blur(0px)',
-      duration: 1.2,
+      duration: 0.8,
       ease: 'power3.inOut',
-      delay: 1.4
-    });
-
-    gsap.to(contentWrapperRef.current, {
-      opacity: 1,
-      duration: 0.1,
-      delay: 1.2
     });
 
     gsap.to('.hero-stagger-item', {
       opacity: 1,
       y: 0,
-      duration: 0.8,
-      stagger: 0.15,
+      duration: 0.6,
+      stagger: 0.08,
       ease: 'power3.out',
-      delay: 1.2
     });
 
     gsap.to(floatingBadgeRef.current, {
@@ -79,7 +64,7 @@ export default function Hero({ isStarted }) {
       y: 0,
       duration: 0.6,
       ease: 'power3.out',
-      delay: 2.2
+      delay: 0.3
     });
 
     // Parallax Scroll Transition Effect
