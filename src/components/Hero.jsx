@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Icon from './Icon';
 
 export default function Hero({ isStarted }) {
@@ -31,6 +32,13 @@ export default function Hero({ isStarted }) {
     if (videoRef.current) {
       videoRef.current.currentTime = 0;
       videoRef.current.play().catch(e => console.error("Replay prevented:", e));
+    }
+  };
+
+  const handleVideoEnd = () => {
+    const nextSection = document.getElementById('about');
+    if (nextSection) {
+      nextSection.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -74,6 +82,30 @@ export default function Hero({ isStarted }) {
       delay: 2.2
     });
 
+    // Parallax Scroll Transition Effect
+    gsap.to(videoWrapperRef.current, {
+      yPercent: 40,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: 'top top',
+        end: 'bottom top',
+        scrub: true
+      }
+    });
+
+    gsap.to(contentWrapperRef.current, {
+      yPercent: -30,
+      opacity: 0,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: 'top top',
+        end: 'bottom top',
+        scrub: true
+      }
+    });
+
   }, { scope: containerRef, dependencies: [isStarted] });
 
   return (
@@ -96,6 +128,7 @@ export default function Hero({ isStarted }) {
             ref={videoRef}
             src="/video/showreel-landscape.mp4" 
             playsInline
+            onEnded={handleVideoEnd}
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           ></video>
           {/* Dark Overlay for Text Legibility */}
