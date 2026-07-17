@@ -95,9 +95,9 @@ export default function ExperienceSection() {
                   <h3>{exp.type}</h3>
                   <p className="exp-company">{exp.company}</p>
                 </div>
-                <div className="exp-meta" style={{ alignItems: 'flex-start', margin: '1.5rem 0' }}>
-                  <span style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}><Icon name="calendar" size={16} /> {exp.date}</span>
-                  <span style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}><Icon name="mapPin" size={16} /> {exp.location}</span>
+                <div className="exp-meta">
+                  <span><Icon name="calendar" size={16} /> {exp.date}</span>
+                  <span><Icon name="mapPin" size={16} /> {exp.location}</span>
                 </div>
                 <ul className="exp-list">
                   {exp.tasks.map((t, idx) => <li key={idx}>{t}</li>)}
