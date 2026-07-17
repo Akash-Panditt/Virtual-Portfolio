@@ -1,6 +1,30 @@
+import { useRef } from 'react';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
 export default function Footer() {
+  const containerRef = useRef(null);
+
+  useGSAP(() => {
+    gsap.fromTo(containerRef.current,
+      { opacity: 0, y: 20 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 95%",
+          toggleActions: "play none none reverse"
+        }
+      }
+    );
+  }, { scope: containerRef });
+
   return (
-    <footer className="footer">
+    <footer className="footer" ref={containerRef} style={{ willChange: 'transform, opacity' }}>
       <p>© 2026 <strong>Akash Pandit</strong>. All rights reserved.</p>
       <div className="footer-links">
         <a href="https://github.com/Akash-Panditt" target="_blank" rel="noopener noreferrer">

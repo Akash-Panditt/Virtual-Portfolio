@@ -1,7 +1,12 @@
-import { motion } from 'framer-motion';
+import { useRef } from 'react';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Icon from './Icon';
 
 export default function SkillsSection() {
+  const containerRef = useRef(null);
+
   const allSkills = [
     { icon: "code", name: "React.js" },
     { icon: "code", name: "JavaScript ES6+" },
@@ -15,30 +20,54 @@ export default function SkillsSection() {
     { icon: "book", name: "API Integration" },
     { icon: "book", name: "Agile Development" },
   ];
-  
+
   // Duplicate skills for seamless loop
   const tickerItems = [...allSkills, ...allSkills, ...allSkills];
 
+  useGSAP(() => {
+    gsap.fromTo('.skills-header',
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: '.skills-header',
+          start: "top 85%",
+          toggleActions: "play none none reverse"
+        }
+      }
+    );
+
+    gsap.fromTo('.skills-ticker-container',
+      { opacity: 0 },
+      {
+        opacity: 1,
+        duration: 1,
+        delay: 0.2,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: '.skills-ticker-container',
+          start: "top 85%",
+          toggleActions: "play none none reverse"
+        }
+      }
+    );
+  }, { scope: containerRef });
+
   return (
-    <section id="skills" style={{ paddingTop: '2rem', paddingBottom: '6rem' }}>
+    <section id="skills" style={{ paddingTop: '2rem', paddingBottom: '6rem' }} ref={containerRef}>
       <div className="container">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: [0.21, 0.47, 0.32, 0.98] }}
-        >
+        <div className="skills-header" style={{ willChange: 'transform, opacity' }}>
           <p className="section-label">02 — SKILLS & TOOLS</p>
           <h2 className="section-title">What I work with.</h2>
-        </motion.div>
+        </div>
       </div>
-      
-      <motion.div 
+
+      <div
         className="skills-ticker-container"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.2, duration: 1 }}
+        style={{ willChange: 'opacity' }}
       >
         <div className="skills-ticker">
           {tickerItems.map((skill, i) => (
@@ -48,7 +77,7 @@ export default function SkillsSection() {
             </div>
           ))}
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

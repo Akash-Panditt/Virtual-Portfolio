@@ -256,8 +256,16 @@ section { padding: 6rem 0; }
 /* ====== Journey ====== */
 .journey-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem; align-items: start; }
 .journey-text-reveal { color: var(--text-primary); margin-bottom: 1.5rem; font-size: 1.15rem; line-height: 1.7; }
-.journey-info { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1.5rem; }
-.journey-info span { display: flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); font-size: 0.9rem; }
+.journey-info { 
+  display: flex; flex-direction: column; gap: 0.75rem; margin-top: 2rem; 
+  background: rgba(245, 158, 11, 0.05);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  width: fit-content;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+.journey-info span { display: flex; align-items: center; gap: 0.75rem; color: var(--text-primary); font-size: 0.95rem; }
 .journey-info span em { font-style: normal; }
 .journey-links { display: flex; gap: 0.75rem; margin-top: 1.5rem; }
 .journey-links a {

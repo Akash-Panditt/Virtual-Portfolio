@@ -1,15 +1,12 @@
 import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Icon from './Icon';
 
 export default function ExperienceSection() {
   const targetRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: targetRef,
-  });
-
-  // Translate X based on scroll progress (adjust -100% based on how many cards)
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-45%"]);
+  const contentRef = useRef(null);
 
   const experiences = [
     {
@@ -50,22 +47,47 @@ export default function ExperienceSection() {
     }
   ];
 
+  useGSAP(() => {
+    // Header entrance
+    gsap.fromTo('.exp-header',
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: '.exp-header',
+          start: "top 80%",
+          toggleActions: "play none none reverse"
+        }
+      }
+    );
+
+    // Horizontal Scroll
+    gsap.to(contentRef.current, {
+      x: "-45%",
+      ease: "none",
+      scrollTrigger: {
+        trigger: targetRef.current,
+        start: "top top",
+        end: "bottom bottom",
+        scrub: true,
+      }
+    });
+  }, { scope: targetRef });
+
   return (
     <section id="experience" ref={targetRef} className="horizontal-scroll-section">
       <div className="horizontal-scroll-sticky">
-        <motion.div style={{ x, width: 'max-content', paddingLeft: '5vw' }}>
-          <div style={{ paddingLeft: '2rem', marginBottom: '2rem' }}>
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8, ease: [0.21, 0.47, 0.32, 0.98] }}
-            >
+        <div ref={contentRef} style={{ width: 'max-content', paddingLeft: '5vw', willChange: 'transform' }}>
+          <div className="exp-header" style={{ paddingLeft: '2rem', marginBottom: '2rem', willChange: 'transform, opacity' }}>
+            <div>
               <p className="section-label">03 — EXPERIENCE</p>
               <h2 className="section-title">Where I've worked.</h2>
-            </motion.div>
+            </div>
           </div>
-          
+
           <div className="horizontal-scroll-content" style={{ padding: '0 2rem', marginTop: 0 }}>
             {experiences.map((exp, i) => (
               <div key={i} className="horizontal-card">
@@ -83,7 +105,7 @@ export default function ExperienceSection() {
               </div>
             ))}
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

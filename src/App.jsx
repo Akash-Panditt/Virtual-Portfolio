@@ -11,6 +11,11 @@ import CertificationsSection from './components/CertificationsSection';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
 function App() {
   const [isStarted, setIsStarted] = useState(() => {
     return sessionStorage.getItem('portfolioStarted') === 'true';
