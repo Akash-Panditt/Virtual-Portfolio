@@ -40,28 +40,32 @@ export default function Navbar({ isStarted }) {
       return;
     }
 
-    // Entrance animation
+    // Entrance animation — appear instantly with the rest of the site
     gsap.to(headerRef.current, {
       y: 0,
       opacity: 1,
-      duration: 0.8,
+      duration: 0.6,
       ease: "power3.out",
-      delay: 1,
-      onComplete: () => {
-        // Setup scroll direction animation after entrance is done
-        ScrollTrigger.create({
-          start: 'top -50', // trigger after scrolling down a bit
-          end: 99999,
-          onUpdate: (self) => {
-            if (self.direction === 1) { // scrolling down
-              gsap.to(headerRef.current, { y: -100, duration: 0.3, ease: 'power2.out', overwrite: 'auto' });
-            } else { // scrolling up
-              gsap.to(headerRef.current, { y: 0, duration: 0.3, ease: 'power2.out', overwrite: 'auto' });
-            }
-          }
-        });
-      }
     });
+
+    // Setup scroll direction hide/show after a short delay
+    const timer = setTimeout(() => {
+      ScrollTrigger.create({
+        start: 'top -80',
+        end: 99999,
+        onUpdate: (self) => {
+          if (self.direction === 1 && window.scrollY > 200) {
+            // scrolling down & past hero — hide navbar
+            gsap.to(headerRef.current, { y: -100, duration: 0.3, ease: 'power2.out', overwrite: 'auto' });
+          } else {
+            // scrolling up — show navbar
+            gsap.to(headerRef.current, { y: 0, duration: 0.3, ease: 'power2.out', overwrite: 'auto' });
+          }
+        }
+      });
+    }, 800);
+
+    return () => clearTimeout(timer);
   }, [isStarted]);
 
   const toggleTheme = () => setTheme(prev => prev === 'dark' ? 'light' : 'dark');
